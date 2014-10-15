@@ -1,0 +1,18 @@
+{
+	"name":        "tomkyle/yaphr",
+
+	"authors": [
+		{
+			"name":  "Carsten Witt",
+			"email": "tomkyle@posteo.de",
+			"role":  "Developer"
+		}
+	],
+
+	"autoload": {
+		"psr-4": {
+			"tomkyle\\yaphr\\":           "src",
+			"tomkyle\\yaphr\\Adapters\\": "adapters"
+		}
+	}
+}
