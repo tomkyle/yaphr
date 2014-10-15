@@ -48,7 +48,8 @@ var/*
 logs/*
 config.json
 .htaccess
-build/logs/*
+build/*
+
 
 
 
