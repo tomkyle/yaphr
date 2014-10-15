@@ -5,8 +5,17 @@ OOP-style, crisp & useful sharpening.
 
 
 ##Installation
-tbd.
 
+Install via Composer; add this to `composer.json`:
+
+```
+"require": {
+	"tomkyle/yaphr": "~1.0"
+}
+```
+
+##Dependencies
+None, but installing [Slim Framework](https://github.com/codeguy/Slim) is suggested: Yaphr brings it own Slim Middleware for the most common resizing use cases.
 
 
 ##Example Workflow

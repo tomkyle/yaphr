@@ -1,5 +1,6 @@
 {
 	"name":        "tomkyle/yaphr",
+  "version":     "1.0.0",
 
 	"authors": [
 		{
@@ -8,6 +9,10 @@
 			"role":  "Developer"
 		}
 	],
+
+	"suggest": {
+        "slim/slim": "Yaphr comes with Slim Middleware for common resizing use cases."
+  },
 
 	"autoload": {
 		"psr-4": {
