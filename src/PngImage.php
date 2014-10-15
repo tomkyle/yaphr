@@ -15,7 +15,7 @@ class PngImage extends ImageAbstract implements PngImageInterface
      * @var int
      * @see http://php.net/manual/de/image.constants.php
      */
-    protected $image_type = \IMAGETYPE_PNG;
+    public $image_type = \IMAGETYPE_PNG;
 
     /**
      * @param string|SplFileInfo $file
@@ -25,7 +25,7 @@ class PngImage extends ImageAbstract implements PngImageInterface
      * @uses  $resource
      * @uses  CheckReadableFile
      */
-    protected function __construct($file)
+    public function __construct($file)
     {
         new CheckReadableFile( $file );
         $this->resource = imagecreatefrompng($file);

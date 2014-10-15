@@ -15,7 +15,7 @@ class GifImage extends ImageAbstract implements GifImageInterface
      * @var int
      * @see http://php.net/manual/de/image.constants.php
      */
-    protected $image_type = \IMAGETYPE_GIF;
+    public $image_type = \IMAGETYPE_GIF;
 
 
     /**
@@ -26,7 +26,7 @@ class GifImage extends ImageAbstract implements GifImageInterface
      * @uses  $resource
      * @uses  CheckReadableFile
      */
-    protected function __construct($file)
+    public function __construct($file)
     {
         new CheckReadableFile( $file );
 
