@@ -9,6 +9,10 @@
 		}
 	],
 
+	"suggest": {
+        "slim/slim": "Yaphr comes with Slim Middleware for common resizing use cases."
+  },
+
 	"autoload": {
 		"psr-4": {
 			"tomkyle\\yaphr\\":           "src",
