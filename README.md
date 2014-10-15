@@ -1,7 +1,9 @@
 #tomkyle\yaphr
 
-Yet another photo resizer for JPG, PNG, GIF.  
-OOP-style, crisp & useful sharpening.
+[![Build Status](https://travis-ci.org/tomkyle/yaphr.svg?branch=master)](https://travis-ci.org/tomkyle/yaphr)
+
+Yet Another Photo Resizer for JPG, PNG, GIF.  
+Resizing and cropping, crisp & useful sharpening.
 
 
 ##Installation
