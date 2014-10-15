@@ -8,7 +8,7 @@ namespace tomkyle\yaphr\Geometry;
 class SquareBox extends BoxAbstract implements BoxInterface
 {
 
-    public function __construct( $side, BoxInterface $original )
+    public function __construct( $side )
     {
         $this->width  = $side;
         $this->height = $side;
