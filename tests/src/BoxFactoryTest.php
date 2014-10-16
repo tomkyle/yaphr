@@ -51,8 +51,10 @@ class BoxFactoryTest extends \PHPUnit_Framework_TestCase {
             array( 150, 100, 'auto'),
             array( 150, 150, 'auto'),
             array( 150, 100, 'exact'),
+            array( 150, 100, 'tall'),
             array( 150, 100, 'portrait'),
             array( 150, 100, 'landscape'),
+            array( 150, 100, 'wide'),
             array( 150, 100, 'crop'),
             array( 150, 100)
         );

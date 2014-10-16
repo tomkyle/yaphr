@@ -26,40 +26,81 @@ This example shows how to crop a JPG and save it into a cache directory:
 ```php
 <?php
 use \tomkyle\yaphr\ImageFactory;
-use \tomkyle\yaphr\Geometry\CropBox;
-use \tomkyle\yaphr\Geometry\AutoBox;
+use \tomkyle\yaphr\Geometry\BoxFactory;
 use \tomkyle\yaphr\Resize;
 use \tomkyle\yaphr\Filters\SharpenImage;
 use \tomkyle\yaphr\FileSystem\CreateCacheDir;
-use \tomkyle\yaphr\FileSystem\DeliverImage;
 use \tomkyle\yaphr\FileSystem\SaveImage;
+use \tomkyle\yaphr\FileSystem\DeliverImage;
 use \SplFileInfo;
 
 // YAPHR likes `SplFileInfo`
 $source = new SplFileInfo( '../master/path/to/original.jpg' );
 $output = new SplFileInfo( './path/to/resized.jpg' );
 
-// Generate image from any original
-$factory = new ImageFactory();
-$image   = $factory->newInstance( $source );
+// Generate Factories:
+$image_factory = new ImageFactory;
+$box_factory   = new BoxFactory;
 
-// Prepare cropping
-$crop_box = new CropBox( 300, 200, $image );
-$auto_box = new AutoBox( 300, 300, $image ); # not used
+// Grab image from JPG/PNG/GIF:
+$image   = $image_factory->newInstance( $source );
 
-// Generate new (cropped) image
+// Setup resize box:
+$crop_box = $box_factory->newInstance( 300, 200, $image, 'crop');
+
+// Create resized (cropped) image:
 $resized = new Resize($image, $crop_box);
 
-// Make it crisp
+// Make it nice and crisp:
 new SharpenImage( $resized );
 
-// Prepare saving, write output
+// Save to file cache:
 new CreateCacheDir( $output, 0775 );
 new SaveImage( $resized, $output, 85 );
-chmod($output, 0775);
 
-// Send to client
+// Send to client:
 new DeliverImage( $output, "exit" );
+```
+
+
+##Resize boxes
+Yaphr offers various resizing modes, all of them useful in different use cases.
+
+If you exactly know what you want, you may instantiate a concrete Box class; using the `BoxFactory` with string parameter gives more flexibility: Just pass desired `$width` and `$height`, your original `$image` and the box type.
+
+**Crop** extracts as much as possible from the original that fits into the given width and height. Most useful for pictures with varying side ratios, e.g. in responsive context.
+```php
+$exact = new CropBox( $width, $height, $image );
+// same as
+$exact = $box_factory->newInstance( $width, $height, $image, 'crop');
+```
+
+**Auto** makes portrait images `$height` pixels high, and landscape ones `$width` pixels, preserving side ratios. Perhaps the most classic resing mode.
+```php
+$exact = new AutoBox( $width, $height, $image );
+// same as
+$exact = $box_factory->newInstance( $width, $height, $image, 'auto');
+```
+
+**Exact** fits the image in the given width and height, not preserving side ratio (i.e. the result may be distorted). Mostly not useful (except from, well, distorting).
+```php
+$exact = new Box( $width, $height );
+// same as
+$exact = $box_factory->newInstance( $width, $height, $image, 'exact');
+```
+
+**Tall** resizes to the given height, regardless of the image width, but preserving side ratios. Useful for horizontal “same height” galleries or *Masonry galleries*.
+```php
+$exact = new TallBox( $height, $image );
+// same as
+$exact = $box_factory->newInstance( $height, $image, 'tall');
+```
+
+**Wide** resizes to the given width, regardless of the image height, but preserving side ratios. Useful for vertical “same width” galleries.
+```php
+$exact = new WideBox( $width, $image );
+// same as
+$exact = $box_factory->newInstance( $width, $image, 'wide');
 ```
 
 
@@ -90,7 +131,7 @@ use \tomkyle\yaphr\PngImageInterface;
 <?php
 # Classes
 use \tomkyle\yaphr\ImageFactory;
-use \tomkyle\yaphr\BlankImage;
+use \tomkyle\yaphr\Workflow;
 use \tomkyle\yaphr\Resize;
 ```
 
