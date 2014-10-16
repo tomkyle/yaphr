@@ -8,48 +8,53 @@ Resizing and cropping, crisp & useful sharpening.
 
 ##Installation
 
-Install via Composer; add this to `composer.json`:
+Yaphr has no dependencies so far, although but installing [Slim](https://github.com/codeguy/Slim) may be useful: Yaphr brings it own Slim Middleware for the most common resizing use cases. Install via Composer; add this to `composer.json`:
 
 ```
 "require": {
-	"tomkyle/yaphr": "~1.0"
+	"tomkyle/yaphr": "~1.1"
 }
 ```
 
-##Dependencies
-None, but installing [Slim Framework](https://github.com/codeguy/Slim) is suggested: Yaphr brings it own Slim Middleware for the most common resizing use cases.
+##Getting started
 
-
-##Example Workflow
-This example shows how to crop a JPG and save it into a cache directory:
+Yaphr comes with a convenience workflow that does most of the business for you:
 
 ```php
-<?php
 use \tomkyle\yaphr\ImageFactory;
 use \tomkyle\yaphr\Geometry\BoxFactory;
-use \tomkyle\yaphr\Resize;
-use \tomkyle\yaphr\Filters\SharpenImage;
-use \tomkyle\yaphr\FileSystem\CreateCacheDir;
-use \tomkyle\yaphr\FileSystem\SaveImage;
-use \tomkyle\yaphr\FileSystem\DeliverImage;
+use \tomkyle\yaphr\Workflow;
 use \SplFileInfo;
 
 // YAPHR likes `SplFileInfo`
 $source = new SplFileInfo( '../master/path/to/original.jpg' );
 $output = new SplFileInfo( './path/to/resized.jpg' );
 
-// Generate Factories:
+// Generate factories:
 $image_factory = new ImageFactory;
 $box_factory   = new BoxFactory;
 
-// Grab image from JPG/PNG/GIF:
-$image   = $image_factory->newInstance( $source );
+// Grab your instances:
+$image  = $image_factory->newInstance( $source );
+$box    = $box_factory->newInstance( 300, 200, $image, 'crop');
 
-// Setup resize box:
-$crop_box = $box_factory->newInstance( 300, 200, $image, 'crop');
+// Convenience, convenience:
+// Resize, Sharpen, Save to cache 
+// and Delivery to client in one step:
+new Workflow( $image, $box, $output);
+```
+
+So the `Workflow` is your friend. This example shows what happens inside:
+
+```php
+use \tomkyle\yaphr\Resize;
+use \tomkyle\yaphr\Filters\SharpenImage;
+use \tomkyle\yaphr\FileSystem\CreateCacheDir;
+use \tomkyle\yaphr\FileSystem\SaveImage;
+use \tomkyle\yaphr\FileSystem\DeliverImage;
 
 // Create resized (cropped) image:
-$resized = new Resize($image, $crop_box);
+$resized = new Resize($image, $box);
 
 // Make it nice and crisp:
 new SharpenImage( $resized );
@@ -63,10 +68,10 @@ new DeliverImage( $output, "exit" );
 ```
 
 
-##Resize boxes
-Yaphr offers various resizing modes, all of them useful in different use cases.
 
-If you exactly know what you want, you may instantiate a concrete Box class; using the `BoxFactory` with string parameter gives more flexibility: Just pass desired `$width` and `$height`, your original `$image` and the box type.
+
+##Resize boxes
+Yaphr offers various resizing modes, all of them useful in different use cases. If you exactly know what you want, you may instantiate a concrete Box class; using the `BoxFactory` with string parameter gives more flexibility: Just pass desired `$width` and `$height`, your original `$image` and the box type.
 
 **Crop** extracts as much as possible from the original that fits into the given width and height. Most useful for pictures with varying side ratios, e.g. in responsive context.
 ```php
@@ -111,7 +116,6 @@ $exact = $box_factory->newInstance( $width, $width, $image, 'wide');
 ###Image classes
 
 ```php
-<?php
 # Classes
 use \tomkyle\yaphr\GifImage;
 use \tomkyle\yaphr\JpegImage;
@@ -128,7 +132,6 @@ use \tomkyle\yaphr\PngImageInterface;
 ###Business classes
 
 ```php
-<?php
 # Classes
 use \tomkyle\yaphr\ImageFactory;
 use \tomkyle\yaphr\Workflow;
@@ -140,7 +143,6 @@ use \tomkyle\yaphr\Resize;
 ###Geometry classes
 
 ```php
-<?php
 # Boxes
 use \tomkyle\yaphr\Geometry\Box;
 use \tomkyle\yaphr\Geometry\BoxFactory;
@@ -163,7 +165,6 @@ use \tomkyle\yaphr\Geometry\CropBoxInterface;
 
 ###Image filter classes
 ```php
-<?php
 # Classes
 use \tomkyle\yaphr\Filters\SharpenImage;
 use \tomkyle\yaphr\Filters\UnsharpMask; # experimental
@@ -173,7 +174,6 @@ use \tomkyle\yaphr\Filters\UnsharpMask; # experimental
 ###File system classes
 
 ```php
-<?php
 # Classes
 use \tomkyle\yaphr\FileSystem\CreateCacheDir;
 use \tomkyle\yaphr\FileSystem\CheckReadableFile;
@@ -192,7 +192,6 @@ use \tomkyle\yaphr\FileSystem\SaveImageInterface;
 ###Exceptions
 
 ```php
-<?php
 # Classes and Interfaces
 use \tomkyle\yaphr\Exceptions\FileNotFound;
 use \tomkyle\yaphr\Exceptions\YaphrException;
@@ -202,7 +201,6 @@ use \tomkyle\yaphr\Exceptions\YaphrExceptionInterface;
 ###PHP resource aggregation
 
 ```php
-<?php
 # Interfaces and traits
 use \tomkyle\yaphr\Resources\ResourceAggregateuse \tomkyle\yaphr\Resources\ResourceAggregateTrait
 ```

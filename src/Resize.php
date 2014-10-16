@@ -28,16 +28,6 @@ class Resize implements ImageInterface
     public $image;
 
 
-    /**
-     * @var int
-     */
-    public $width;
-
-
-    /**
-     * @var int
-     */
-    public $height;
 
 
     /**
