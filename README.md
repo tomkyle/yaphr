@@ -12,7 +12,7 @@ Install via Composer; add this to `composer.json`:
 
 ```
 "require": {
-	"tomkyle/yaphr": "~1.0"
+	"tomkyle/yaphr": "~1.1"
 }
 ```
 
