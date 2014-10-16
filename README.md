@@ -93,14 +93,14 @@ $exact = $box_factory->newInstance( $width, $height, $image, 'exact');
 ```php
 $exact = new TallBox( $height, $image );
 // same as
-$exact = $box_factory->newInstance( $height, $image, 'tall');
+$exact = $box_factory->newInstance( $height, $height, $image, 'tall');
 ```
 
 **Wide** resizes to the given width, regardless of the image height, but preserving side ratios. Useful for vertical “same width” galleries.
 ```php
 $exact = new WideBox( $width, $image );
 // same as
-$exact = $box_factory->newInstance( $width, $image, 'wide');
+$exact = $box_factory->newInstance( $width, $width, $image, 'wide');
 ```
 
 
@@ -166,7 +166,7 @@ use \tomkyle\yaphr\Geometry\CropBoxInterface;
 <?php
 # Classes
 use \tomkyle\yaphr\Filters\SharpenImage;
-use \tomkyle\yaphr\Filters\UnsharpMask;
+use \tomkyle\yaphr\Filters\UnsharpMask; # experimental
 ```
 
 
