@@ -15,10 +15,12 @@ class BoxFactory
                 return new Box( $newWidth, $newHeight );
                 break;
 
+            case 'tall':
             case 'portrait':
                 return new TallBox( $newHeight, $original );
                 break;
 
+            case 'wide':
             case 'landscape':
                 return new WideBox( $newWidth, $original);
                 break;
