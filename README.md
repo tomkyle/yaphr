@@ -202,7 +202,8 @@ use \tomkyle\yaphr\Exceptions\YaphrExceptionInterface;
 
 ```php
 # Interfaces and traits
-use \tomkyle\yaphr\Resources\ResourceAggregateuse \tomkyle\yaphr\Resources\ResourceAggregateTrait
+use \tomkyle\yaphr\Resources\ResourceAggregate;
+use \tomkyle\yaphr\Resources\ResourceAggregateTrait;
 ```
 
 
